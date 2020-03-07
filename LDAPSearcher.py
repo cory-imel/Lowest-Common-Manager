@@ -117,3 +117,6 @@ class LdapSearcher(object):
                 g.add_edge(Edge(manager[0], subordinate[0]))
 
         g.write_svg(args.file, args.imageType, args.layout)
+
+    def retrieve_group_users(self, group):
+        self.ldap.search_s(base, self.scope, filter, self.attributes)
