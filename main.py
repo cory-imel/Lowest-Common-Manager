@@ -17,8 +17,6 @@ from LowestCommonManager import LowestCommonManager
 
 def main(args):
 
-    # group = ['Stella Wiley', 'Ronni Ko', "Bob Johnson"]
-
     domain = re.search('ldaps://((.*\.?)+)', args.server)
     split = domain.groups()[0].split('.')[1:]
     partDomain = 'dc=' + ',dc='.join(split)

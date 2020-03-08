@@ -9,7 +9,7 @@ __license__ = "MIT"
 
 
 from logzero import logger
-from anytree import Node, RenderTree
+from anytree import Node
 
 
 class LowestCommonManager(object):
