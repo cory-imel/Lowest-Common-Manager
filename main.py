@@ -29,14 +29,14 @@ def main(args):
     searcher = LdapSearcher(args.server, partDomain, args.user, args.password)
     root, hierarchy = searcher.retrieve_hierarchy(args.root, args.depth)
     group = searcher.retrieve_group_users(args.group, partDomain)
-    print(group)
+    searcher.unbind_ldap()
+
     lcm = LowestCommonManager(hierarchy, root, group)
     tree = lcm.build_tree()
 
     if args.file is not '':
         searcher.render_graph(root, hierarchy, args)
 
-    searcher.unbind_ldap()
     logger.info("Starting Search")
     print(lcm.recurse_lca(tree, group, lcm=''))
 
