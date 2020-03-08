@@ -1,4 +1,4 @@
 logzero  # see github.com/metachris/logzero
-ldap
+python-ldap
 pydot
 anytree

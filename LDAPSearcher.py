@@ -118,5 +118,18 @@ class LdapSearcher(object):
 
         g.write_svg(args.file, args.imageType, args.layout)
 
-    def retrieve_group_users(self, group):
-        self.ldap.search_s(base, self.scope, filter, self.attributes)
+    def retrieve_group_users(self, group, base):
+        filter = '(&(objectCategory=user)(memberOf=' + group + '))'
+        attributes = ['displayName']
+        names = []
+        try:
+            data = self.ldap.search_s(base, self.scope, filter, attributes)
+        except ldap.error as e:
+            logger.error(e)
+            sys.exit(1)
+
+        for user in data:
+            if user[0] is not None:
+                names.append(user[1]['displayName'][0].decode("utf-8"))
+
+        return names
