@@ -51,7 +51,7 @@ class LowestCommonManager(object):
         return ancestors1[i - 1].name
 
     def recurse_lca(self, tree, group, lcm):
-        """Finds the lowest common ancestor (node parent e.g. manager) of two users."""
+        """Recurse the group of users to find the LCA on n-ary trees"""
 
         if lcm is self.root[0]:
             return self.root[0]
