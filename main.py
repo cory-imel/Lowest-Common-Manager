@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """
-Module Docstring
+Searches for the lowest common manager of users in an active directory group.
+
+
+usage: main.py [-h] --server SERVER --user USER [--password PASSWORD] --root
+               ROOT [--file FILE] --group GROUP [--depth DEPTH]
+               [--imageType IMAGETYPE] [--layout LAYOUT] [--version]
 """
 
 __author__ = "Cory Imel"

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
-Module Docstring
+Lowest Common Manager class. Contains the methods for the tree handling and LCA functionality
+
+Dependecies:
+    logzero
+    anytree
 """
 
 __author__ = "Cory Imel"
@@ -21,11 +25,13 @@ class LowestCommonManager(object):
             self.group = group
 
     def build_tree(self):
+        """Builds dictionary containing anytree nodes with the users Display Name as the key."""
 
         logger.info("Building Tree")
 
         tree = {}
 
+        "TODO: use different key from the users AD Display Name"
         tree[self.root[0]] = (Node(self.root[0], parent=None))
 
         for manager in self.hierarchy:
@@ -33,7 +39,9 @@ class LowestCommonManager(object):
                 tree[subordinate[0]] = (Node(subordinate[0], parent=tree[manager[0]]))
         return tree
 
-    def find_lca(self, ancestors1, ancestors2):
+    @staticmethod
+    def find_lca(ancestors1, ancestors2):
+        """Finds the lowest common ancestor (node parent e.g. manager) of two users."""
 
         i = 0
         while i < len(ancestors1) and i < len(ancestors2):
@@ -43,6 +51,7 @@ class LowestCommonManager(object):
         return ancestors1[i - 1].name
 
     def recurse_lca(self, tree, group, lcm):
+        """Finds the lowest common ancestor (node parent e.g. manager) of two users."""
 
         if lcm is self.root[0]:
             return self.root[0]

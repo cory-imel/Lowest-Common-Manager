@@ -11,8 +11,9 @@ The name of 'Richard Nienaber' may not be used to endorse or promote products de
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Dependencies:
-ldap - http://pypi.python.org/pypi/python-ldap/
-
+    ldap - http://pypi.python.org/pypi/python-ldap/
+    logzero
+    pydot (and graphviz)
 """
 
 import ldap
@@ -28,9 +29,8 @@ class LdapSearcher(object):
         try:
             logger.info("Connecting to LDAP")
             conn = ldap.initialize(server)
-            # Unsafe, server authentication not enabled
+            # Unsafe, LDAP server authentication not enabled
             conn.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
-            # conn.set_option(ldap.OPT_X_TLS_CACERTFILE, cert)
             conn.set_option(ldap.OPT_REFERRALS, 0)
             conn.protocol_version = 3
             conn.set_option(ldap.OPT_X_TLS_NEWCTX, 0)
@@ -119,6 +119,7 @@ class LdapSearcher(object):
         g.write_svg(args.file, args.imageType, args.layout)
 
     def retrieve_group_users(self, group, base):
+        logger.info("Retrieving users of the group")
         filter = '(&(objectCategory=user)(memberOf=' + group + '))'
         attributes = ['displayName']
         names = []
