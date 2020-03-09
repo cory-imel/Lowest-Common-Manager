@@ -74,7 +74,7 @@ class LdapSearcher(object):
     def getName(self, entry):
         attributes = entry[0][1]
         title = '' if not 'title' in attributes else attributes['title'][0]
-        title = title.decode("utf-8")
+        # title = title.decode("utf-8")
         return attributes['displayName'][0].decode("utf-8"), title
 
     def recurse_direct_reports(self, entry, visited, reports, depth, maxDepth):
