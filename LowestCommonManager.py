@@ -72,8 +72,16 @@ class LowestCommonManager(object):
             return self.find_lca(ancestors1, ancestors2)
 
         else:
+            try:
+                ancestors1 = tree[group.pop()].ancestors
+            except:
+                group.pop()
+                return self.recurse_lca(tree, group, lcm)
+            try:
+                ancestors2 = tree[group.pop()].ancestors
+            except:
+                group.pop()
+                return self.recurse_lca(tree, group, lcm)
 
-            ancestors1 = tree[group.pop()].ancestors
-            ancestors2 = tree[group.pop()].ancestors
             lcm = self.find_lca(ancestors1, ancestors2)
             return self.recurse_lca(tree, group, lcm)
